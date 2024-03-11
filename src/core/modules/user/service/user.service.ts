@@ -19,7 +19,7 @@ import { User } from '../../../models/User';
 export class UserService {
   async getAllUsers(): Promise<User[]> {
     try {
-      const users = await getAllUsers();
+      const users: User[] = await getAllUsers();
       return plainToInstance(UserDto, users);
     } catch (error) {
       throw new HttpException(

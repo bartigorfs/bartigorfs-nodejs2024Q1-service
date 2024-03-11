@@ -2,10 +2,12 @@ import {
   Body,
   Controller,
   Delete,
-  Get, HttpStatus,
+  Get,
+  HttpStatus,
   Param,
   Post,
-  Put, Res,
+  Put,
+  Res,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { CreateUserDto, UpdatePasswordDto } from '../../../dto/user.dto';
@@ -13,8 +15,7 @@ import { User } from '../../../models/User';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   async findAll(): Promise<User[]> {
