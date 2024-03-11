@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
-import { UserService } from "../service/user.service";
-import { UpdatePasswordDto } from "../../../dto/user.dto";
-import { raw } from "express";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get, HttpStatus,
+  Param,
+  Post,
+  Put, Res,
+} from '@nestjs/common';
+import { UserService } from '../service/user.service';
+import { CreateUserDto, UpdatePasswordDto } from '../../../dto/user.dto';
+import { User } from '../../../models/User';
 
-@Controller("user")
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {
   }
@@ -14,18 +22,33 @@ export class UserController {
     return users;
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<User> {
+    const user: User = await this.userService.getUserById(id);
+    return user;
   }
 
   @Post()
-  async createNewUser(@Body() user: User) {
+  async createNewUser(@Body() user: CreateUserDto): Promise<User> {
     const newUser: User = await this.userService.createUser(user);
     return newUser;
   }
 
-  @Put()
-  updateUserPassword(@Param("id") id: string, @Body() user: UpdatePasswordDto) {
+  @Put(':id')
+  async updateUserPassword(
+    @Param('id') id: string,
+    @Body() user: UpdatePasswordDto,
+  ): Promise<User> {
+    const updatedUser: User = await this.userService.updateUserPassword(
+      id,
+      user,
+    );
+    return updatedUser;
+  }
 
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string, @Res() res: any): Promise<void> {
+    await this.userService.deleteUser(id);
+    res.status(HttpStatus.NO_CONTENT).send();
   }
 }

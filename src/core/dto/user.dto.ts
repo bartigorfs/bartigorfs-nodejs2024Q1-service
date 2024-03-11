@@ -1,10 +1,12 @@
-import { Expose } from "class-transformer";
+import { Exclude, Expose } from 'class-transformer';
+import { IsString } from 'class-validator';
 
 export class UserDto {
   @Expose()
   id?: string;
   @Expose()
   login: string;
+  @Exclude()
   password: string;
   @Expose()
   version: number;
@@ -14,12 +16,16 @@ export class UserDto {
   updatedAt: number;
 }
 
-export interface CreateUserDto {
-  login: string;
-  password: string;
+export class CreateUserDto {
+  @IsString()
+  readonly login: string;
+  @IsString()
+  readonly password: string;
 }
 
-export interface UpdatePasswordDto {
-  oldPassword: string; // previous password
-  newPassword: string; // new password
+export class UpdatePasswordDto {
+  @IsString()
+  readonly oldPassword: string; // previous password
+  @IsString()
+  readonly newPassword: string; // new password
 }

@@ -1,7 +1,7 @@
 export interface IDummyDb {
-  users: User[],
-  tracks: Track[],
-  artists: Artist[],
-  albums: Album[],
-  Favorites: Favorites[]
+  users: User[];
+  tracks: Track[];
+  artists: Artist[];
+  albums: Album[];
+  Favorites: Favorites[];
 }
