@@ -58,7 +58,7 @@ export const updateTrack = async (id: string, newTrack: CreateTrackDto) => {
     try {
       data.tracks = data.tracks.map((track: Track) => {
         if (track.id === id) {
-          return { ...newTrack };
+          return { ...newTrack } as Track;
         } else return track;
       });
       resolve(data.tracks.find((track: Track) => track.id === id));
