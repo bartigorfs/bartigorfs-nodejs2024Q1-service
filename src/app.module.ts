@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UserModule } from './core/modules/user/user.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    UserModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env.example',
+      isGlobal: true,
+    }),
+  ],
 })
-export class AppModule {}
+export class AppModule {
+  static port: string;
+  constructor(configService: ConfigService) {
+    AppModule.port = configService.get('PORT');
+  }
+}
